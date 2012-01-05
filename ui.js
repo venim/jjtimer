@@ -5,7 +5,6 @@ function load_external(url) {
 	document.getElementsByTagName("head")[0].appendChild(file);
 } 
 
-function t(e, t) { e.html(t); }
 function is_visible(e) { return e.css('display') !== "none"; }
 
 var ui = function() {
@@ -89,10 +88,10 @@ var ui = function() {
 	}
 	
 	function populate_scramblers_menu() {
-		var menu = $('#scramble_menu');
+		var menu = $('#scramble_menu')[0];
 		for(var i = 0; i < scramble_manager.scramblers.length; i++)
 		{
-			//menu.options[i] = new Option(scramble_manager.get_name(i));
+			menu.options[i] = new Option(scramble_manager.get_name(i));
 		}
 	}
 
@@ -103,7 +102,7 @@ var ui = function() {
 	
 	function highlight(start, length) {
 		if(timer.is_running()) return;
-		t(times_label, to_times_list(start, length - 1));
+		times_label.html(to_times_list(start, length - 1));
 	}
 
 	function hilight_current(length) {
@@ -147,12 +146,12 @@ var ui = function() {
 	},
 
 	update_running: function() {
-		t(timer_label, human_time(timer.current_time()));
+		timer_label.html(human_time(timer.current_time()));
 	},
 
 	on_stop: function() {
 		clearInterval(update_timer);
-		t(timer_label, human_time(timer.current_time()));
+		timer_label.html(human_time(timer.current_time()));
 		scramble_label.className = "";
 		stats_label.className = "";
 		times_label.className = "a";
@@ -167,7 +166,7 @@ var ui = function() {
 	del: function(index) {
 		if(timer.is_running()) return;
 		session.del(index);
-		t(times_label, to_times_list());
+		times_label.html(to_times_list());
 		update_stats();
 	},
 
@@ -175,8 +174,8 @@ var ui = function() {
 		timer.reset();
 		next_scramble();
 		update_stats();
-		t(timer_label, "0.00");	
-		t(times_label, "&nbsp;");
+		timer_label.html("0.00");	
+		times_label.html("&nbsp;");
 	},
 
 	load_plugin: function() {
@@ -238,7 +237,7 @@ var ui = function() {
 
 		$('#options_label').click(toggle_options);
 		$('#close_options').click(toggle_options);
-		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu').selectedIndex); next_scramble(); });
+		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu')[0].selectedIndex); next_scramble(); });
 		$('#use_inspection').change(timer.toggle_inspection);
 		$('#load_btn').click(function() { session.save(); });
 		$('#load_btn').click(function() { session.load(); update_stats(); });
