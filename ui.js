@@ -169,23 +169,24 @@ var ui = function() {
 	},
 
 	load_plugin: function() {
-		var url = $('#plugin_url').value;
+		var url = $('#plugin_url').val();
 		load_external(url);
 		$('#plugin_url').value = "";
 	},
 
 	plugin_loaded: function(name) {
-		t($('info'), "loaded " + name);
+		$('info').html("loaded " + name);
 		populate_scramblers_menu();
 		setTimeout(function() {
-			t($('info'), "");
+			$('info').html("");
 		}, 1000);
 	},
 
 	render_body: function() {
 		var out = '<div id="left"><div id="info"></div>'+
               '<div id="timer_label">0.00</div>'+
-              '<div id="scramble_label" class="hide_on_running"></div><div id="penalty" class="hide_on_running a">that time was: <span id="p2">+2</span> <span id="dnf">DNF</span></div>'+
+              '<div id="scramble_label" class="hide_on_running"></div>'+
+              '<div id="penalty" class="hide_on_running a">that time was: <span id="p2">+2</span> <span id="dnf">DNF</span></div>'+
               '<div class="hide_on_running" id="bottom_bar"><div id="stats_label">'+
               'times: <span id="s_t">0</span><br />'+
               '<span id="stats_link" class="a">'+
@@ -227,6 +228,8 @@ var ui = function() {
 
 		$('#options_label').click(toggle_options);
 		$('#close_options').click(toggle_options);
+		$('#gray_out').click(toggle_options);
+
 		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu').prop('selectedIndex')); next_scramble(); });
 		$('#use_inspection').change(timer.toggle_inspection);
 		$('#load_btn').click(function() { session.save(); });

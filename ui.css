@@ -65,7 +65,7 @@ html, body {
 	top:40%; left:50%; margin-left:-12.5%; margin-top:-12.5%; width:25%; 
 	padding-left: 2%;
 	display: none;
-	box-shadow: 1px 3px 1px #888;
+	box-shadow: 1px 3px 1px #fff;
 }
 
 .a span {
