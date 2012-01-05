@@ -5,10 +5,8 @@ function load_external(url) {
 	document.getElementsByTagName("head")[0].appendChild(file);
 } 
 
-function $(id) { return document.getElementById(id); }
-function t(e, t) { e.innerHTML = t; }
-function toggle(e) { e.style.display = (e.style.display === "none") ? "inline" : "none"; }
-function is_visible(e) { return e.style.display !== "none"; }
+function t(e, t) { e.html(t); }
+function is_visible(e) { return e.css('display') !== "none"; }
 
 var ui = function() {
 	var timer_label, scramble_label, stats_label, options_label;
@@ -48,27 +46,27 @@ var ui = function() {
 	}
 
 	function on_inspection() {
-		t(timer_label, inspection_count);
+		timer_label.html(inspection_count);
 		inspection_count -= 1;
 		inspection_timer = setTimeout(on_inspection, 1000);
 	}
 
 	function next_scramble()
 	{
-		t(scramble_label, scramble_manager.next());
+		scramble_label.html(scramble_manager.next());
 	}
 
 	function update_stats() {
-		t($('s_t'), session.length());
-		t($('c_a_5'), human_time(session.current_average(5)));
-		t($('c_a_12'), human_time(session.current_average(12)));
-		t($('c_a_100'), human_time(session.current_average(100)));
-		t($('b_a_5'), human_time(session.best_average(5)['avg']));
-		t($('b_a_12'), human_time(session.best_average(12)['avg']));
-		t($('b_a_100'), human_time(session.best_average(100)['avg']));
-		t($('s_a'), human_time(session.session_average()));
-		t($('s_m'), human_time(session.session_mean()));
-		t(times_label, to_times_list());
+		$('#s_t').html(session.length());
+		$('#c_a_5').html(human_time(session.current_average(5)));
+		$('#c_a_12').html(human_time(session.current_average(12)));
+		$('#c_a_100').html(human_time(session.current_average(100)));
+		$('#b_a_5').html(human_time(session.best_average(5)['avg']));
+		$('#b_a_12').html(human_time(session.best_average(12)['avg']));
+		$('#b_a_100').html(human_time(session.best_average(100)['avg']));
+		$('#s_a').html(human_time(session.session_average()));
+		$('#s_m').html(human_time(session.session_mean()));
+		times_label.html(to_times_list());
 	}
 
 	function time_link(index) {
@@ -91,16 +89,16 @@ var ui = function() {
 	}
 	
 	function populate_scramblers_menu() {
-		var menu = $('scramble_menu');
+		var menu = $('#scramble_menu');
 		for(var i = 0; i < scramble_manager.scramblers.length; i++)
 		{
-			menu.options[i] = new Option(scramble_manager.get_name(i));
+			//menu.options[i] = new Option(scramble_manager.get_name(i));
 		}
 	}
 
 	function toggle_options() {
-		toggle($('options'));
-		toggle($('gray_out')); 
+		$('#options').fadeToggle();
+		$('#gray_out').fadeToggle(); 
 	}
 	
 	function highlight(start, length) {
@@ -120,7 +118,7 @@ var ui = function() {
 	key_up: function(ev) {
 		if(ev.keyCode === 27)
 		{
-			if(is_visible($('options')))
+			if(is_visible($('#options')))
 			{
 				toggle_options();
 				return;
@@ -130,7 +128,7 @@ var ui = function() {
 				return;
 			}
 		}
-		if(is_visible($('options'))) return;
+		if(is_visible($('#options'))) return;
 		timer.trigger_up(ev.keyCode === 32);
 	},
 
@@ -144,8 +142,8 @@ var ui = function() {
 		stats_label.className = "g";
 		times_label.className = "g";
 		options_label.className = "g";
-		$('penalty').className = "g";
-		$('stats_link').className = "g";
+		$('#penalty').className = "g";
+		$('#stats_link').className = "g";
 	},
 
 	update_running: function() {
@@ -159,8 +157,8 @@ var ui = function() {
 		stats_label.className = "";
 		times_label.className = "a";
 		options_label.className = "a";
-		$('penalty').className = "a";
-		$('stats_link').className = "a";
+		$('#penalty').className = "a";
+		$('#stats_link').className = "a";
 		next_scramble();
 		update_stats();
 	},
@@ -216,44 +214,43 @@ var ui = function() {
               '<p><input type="submit" id="save_btn" value="save" /> <input type="submit" id="load_btn" value="load" /></p>'+
               '<span class="a"><span id="close_options">close</span></span></div>'+
               '<div id="gray_out" style="display: none;"></div>';
-		document.body.innerHTML = out;
+		$(document.body).html(out);
 	},
 
 	init: function() {
 		ui.render_body();
 
-		timer_label = $('timer_label');
-		scramble_label = $('scramble_label');
-		stats_label = $('stats_label');
-		times_label = $('times_label');
-		options_label = $('options_label');
+		timer_label = $('#timer_label');
+		scramble_label = $('#scramble_label');
+		stats_label = $('#stats_label');
+		times_label = $('#times_label');
+		options_label = $('#options_label');
 
-		$('p2').onclick = function() { session.toggle_plus_two(); update_stats(); t(timer_label, solve_time(session.last())); };
-		$('dnf').onclick = function() { session.toggle_dnf(); update_stats(); t(timer_label, solve_time(session.last())); };
+		$('#p2').click(function() { session.toggle_plus_two(); update_stats(); t(timer_label, solve_time(session.last())); });
+		$('#dnf').click(function() { session.toggle_dnf(); update_stats(); t(timer_label, solve_time(session.last())); });
 
-		$('c_a_5').onclick = function() { hilight_current(5); };
-		$('b_a_5').onclick = function() { var index = session.best_average(5)['index']; highlight(index, 5); };
-		$('c_a_12').onclick = function() { hilight_current(12); };
-		$('b_a_12').onclick = function() { var index = session.best_average(12)['index']; highlight(index, 12); };
-		$('s_a').onclick = function() { hilight_current(session.length()); };
-		$('s_m').onclick = function() { hilight_current(session.length()); };
+		$('#c_a_5').click(function() { hilight_current(5); });
+		$('#b_a_5').click(function() { var index = session.best_average(5)['index']; highlight(index, 5); });
+		$('#c_a_12').click(function() { hilight_current(12); });
+		$('#b_a_12').click(function() { var index = session.best_average(12)['index']; highlight(index, 12); });
+		$('#s_a').click(function() { hilight_current(session.length()); });
+		$('#s_m').click(function() { hilight_current(session.length()); });
 
-		$('options_label').onclick = toggle_options;
-		$('close_options').onclick = toggle_options;
-		$('scramble_menu').onchange = function(s) { scramble_manager.set($('scramble_menu').selectedIndex); next_scramble(); };
-		$('use_inspection').onchange = timer.toggle_inspection;
-		$('load_btn').onclick = function() { session.save(); };
-		$('load_btn').onclick = function() { session.load(); update_stats(); };
+		$('#options_label').click(toggle_options);
+		$('#close_options').click(toggle_options);
+		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu').selectedIndex); next_scramble(); });
+		$('#use_inspection').change(timer.toggle_inspection);
+		$('#load_btn').click(function() { session.save(); });
+		$('#load_btn').click(function() { session.load(); update_stats(); });
 	
 		scramble_manager.add_default();
 		populate_scramblers_menu();
 
 		ui.reset();
 		
-		document.onkeydown = ui.key_down;	
-		document.onkeyup = ui.key_up;
+		$(document).keydown(ui.key_down);	
+		$(document).keyup(ui.key_up);
 	}
 	};
 }();
-window['ui'] = ui;
-window.onload = ui.init;
+$(document).ready(ui.init);
