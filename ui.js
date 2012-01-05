@@ -1,8 +1,5 @@
 function load_external(url) {
-	var file = document.createElement('script');
-	file.type = "text/javascript";
-	file.src = url;
-	document.getElementsByTagName("head")[0].appendChild(file);
+	$.getScript(url);
 } 
 
 var ui = function() {
