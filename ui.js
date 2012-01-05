@@ -5,8 +5,6 @@ function load_external(url) {
 	document.getElementsByTagName("head")[0].appendChild(file);
 } 
 
-function is_visible(e) { return e.css('display') !== "none"; }
-
 var ui = function() {
 	var timer_label, scramble_label, stats_label, options_label;
 	var update_timer, inspection_timer, inspection_count = 15;
@@ -117,7 +115,7 @@ var ui = function() {
 	key_up: function(ev) {
 		if(ev.keyCode === 27)
 		{
-			if(is_visible($('#options')))
+			if($('#options').is(':visible'))
 			{
 				toggle_options();
 				return;
@@ -127,7 +125,7 @@ var ui = function() {
 				return;
 			}
 		}
-		if(is_visible($('#options'))) return;
+		if($('#options').is(':visible')) return;
 		timer.trigger_up(ev.keyCode === 32);
 	},
 
