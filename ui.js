@@ -107,12 +107,11 @@ var ui = function() {
 		highlight(session.length() - length, length);
 	}
 
-	return {
-	key_down: function(ev) {
+	function key_down(ev) {
 		timer.trigger_down();
-	},
+	}
 
-	key_up: function(ev) {
+	function key_up(ev) {
 		if(ev.keyCode === 27)
 		{
 			if($('#options').is(':visible'))
@@ -127,8 +126,9 @@ var ui = function() {
 		}
 		if($('#options').is(':visible')) return;
 		timer.trigger_up(ev.keyCode === 32);
-	},
+	}
 
+	return {
 	on_inspection: on_inspection,
 
 	on_running: function() {
@@ -238,8 +238,8 @@ var ui = function() {
 
 		ui.reset();
 		
-		$(document).keydown(ui.key_down);	
-		$(document).keyup(ui.key_up);
+		$(document).keydown(key_down);	
+		$(document).keyup(key_up);
 	}
 	};
 }();
