@@ -73,7 +73,7 @@ html, body {
 	cursor: pointer;
 }
 
-.g {
+.g, .g span {
 	color: gray;
 }
 

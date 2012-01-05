@@ -137,12 +137,7 @@ var ui = function() {
 		clearTimeout(inspection_timer);
 		inspection_count = 15;
 		update_timer = setInterval(ui.update_running, 10);
-		scramble_label.className = "g";
-		stats_label.className = "g";
-		times_label.className = "g";
-		options_label.className = "g";
-		$('#penalty').className = "g";
-		$('#stats_link').className = "g";
+		$('.hide_on_running').addClass('g');
 	},
 
 	update_running: function() {
@@ -152,12 +147,7 @@ var ui = function() {
 	on_stop: function() {
 		clearInterval(update_timer);
 		timer_label.html(human_time(timer.current_time()));
-		scramble_label.className = "";
-		stats_label.className = "";
-		times_label.className = "a";
-		options_label.className = "a";
-		$('#penalty').className = "a";
-		$('#stats_link').className = "a";
+		$('.hide_on_running').removeClass('g');
 		next_scramble();
 		update_stats();
 	},
@@ -179,9 +169,9 @@ var ui = function() {
 	},
 
 	load_plugin: function() {
-		var url = $('plugin_url').value;
+		var url = $('#plugin_url').value;
 		load_external(url);
-		$('plugin_url').value = "";
+		$('#plugin_url').value = "";
 	},
 
 	plugin_loaded: function(name) {
@@ -195,8 +185,8 @@ var ui = function() {
 	render_body: function() {
 		var out = '<div id="left"><div id="info"></div>'+
               '<div id="timer_label">0.00</div>'+
-              '<div id="scramble_label"></div><div id="penalty" class="a">that time was: <span id="p2">+2</span> <span id="dnf">DNF</span></div>'+
-              '<div id="bottom_bar"><div id="stats_label">'+
+              '<div id="scramble_label" class="hide_on_running"></div><div id="penalty" class="hide_on_running a">that time was: <span id="p2">+2</span> <span id="dnf">DNF</span></div>'+
+              '<div class="hide_on_running" id="bottom_bar"><div id="stats_label">'+
               'times: <span id="s_t">0</span><br />'+
               '<span id="stats_link" class="a">'+
               'current average: <span id="c_a_5"></span>, <span id="c_a_12"></span>, <span id="c_a_100"></span><br />'+
@@ -204,7 +194,7 @@ var ui = function() {
               'session average: <span id="s_a"></span>, mean: <span id="s_m"></span></span></div>'+
               '<div id="options_label" class="a"><span>options</span></div></div></div>'+
 
-              '<div id="right"><div id="times_label" class="a"></div></div>'+
+              '<div id="right"><div id="times_label" class="a hide_on_running"></div></div>'+
               '<div id="options" style="display: none;"><h2 style="margin: 0; padding: 0">options</h2>'+
               '<p><select id="scramble_menu"></select></p>'+
               '<p><input type="input" id="plugin_url" /><input type="submit" onclick="ui.load_plugin()" value="load"/></p>'+
@@ -237,7 +227,7 @@ var ui = function() {
 
 		$('#options_label').click(toggle_options);
 		$('#close_options').click(toggle_options);
-		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu')[0].selectedIndex); next_scramble(); });
+		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu').prop('selectedIndex')); next_scramble(); });
 		$('#use_inspection').change(timer.toggle_inspection);
 		$('#load_btn').click(function() { session.save(); });
 		$('#load_btn').click(function() { session.load(); update_stats(); });
