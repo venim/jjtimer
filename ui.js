@@ -125,6 +125,31 @@ var ui = function() {
 		timer.trigger_up(ev.keyCode === 32);
 	}
 
+	function mouse_down() {
+		timer.trigger_down();
+	}
+
+	function mouse_up() {
+		if($('#options').is(':visible')) return;
+		timer.trigger_up(true);
+	}
+
+	function use_mouse() {
+		$(document).off("keydown", key_down);
+		$(document).off("keyup", key_up);
+
+		timer_label.mousedown(mouse_down);
+		timer_label.mouseup(mouse_up);
+	}
+
+	function use_keyboard() {
+		timer_label.off("mousedown", mouse_down);
+		timer_label.off("mouseup", mouse_up);
+		
+		$(document).keydown(key_down);	
+		$(document).keyup(key_up);
+	}
+
 	return {
 	on_inspection: on_inspection,
 
@@ -197,6 +222,8 @@ var ui = function() {
               '<p><input type="checkbox" id="use_inspection"><label for="use_inspection">use inspection</label>'+
               '<h3 style="margin: 0; padding: 0">session</h3>'+
               '<p><input type="submit" id="save_btn" value="save" /> <input type="submit" id="load_btn" value="load" /></p>'+
+							'<p><select id="trigger_select"><option value="keyboard">keyboard</option>'+
+							'<option value="mouse">mouse</option></select></p>'+
               '<span class="a"><span id="close_options">close</span></span></div>'+
               '<div id="gray_out" style="display: none;"></div>';
 		$(document.body).html(out);
@@ -211,8 +238,8 @@ var ui = function() {
 		times_label = $('#times_label');
 		options_label = $('#options_label');
 
-		$('#p2').click(function() { session.toggle_plus_two(); update_stats(); t(timer_label, solve_time(session.last())); });
-		$('#dnf').click(function() { session.toggle_dnf(); update_stats(); t(timer_label, solve_time(session.last())); });
+		$('#p2').click(function() { session.toggle_plus_two(); update_stats(); timer_label.html(solve_time(session.last())); });
+		$('#dnf').click(function() { session.toggle_dnf(); update_stats(); timer_label.html(solve_time(session.last())); });
 
 		$('#c_a_5').click(function() { hilight_current(5); });
 		$('#b_a_5').click(function() { var index = session.best_average(5)['index']; highlight(index, 5); });
@@ -225,10 +252,19 @@ var ui = function() {
 		$('#close_options').click(toggle_options);
 		$('#gray_out').click(toggle_options);
 
-		$('#scramble_menu').change(function(s) { scramble_manager.set($('#scramble_menu').prop('selectedIndex')); next_scramble(); });
+		$('#scramble_menu').change(function() {
+			scramble_manager.set($('#scramble_menu').prop('selectedIndex'));
+			next_scramble();
+		});
 		$('#use_inspection').change(timer.toggle_inspection);
 		$('#load_btn').click(function() { session.save(); });
 		$('#load_btn').click(function() { session.load(); update_stats(); });
+		$('#trigger_select').change(function() {
+			switch($('#trigger_select').prop('selectedIndex')) {
+				case 0: use_keyboard(); break;
+				case 1: use_mouse(); break;
+			}
+		});
 	
 		scramble_manager.add_default();
 		populate_scramblers_menu();
@@ -237,7 +273,7 @@ var ui = function() {
 		
 		$(document).keydown(key_down);	
 		$(document).keyup(key_up);
-	}
+	}	
 	};
 }();
 $(document).ready(ui.init);
