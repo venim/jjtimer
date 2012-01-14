@@ -50,6 +50,7 @@ var ui = function() {
 	}
 
 	function on_inspection(inspection_count) {
+		timer_label.style.color = "red";
 		if(inspection_count > 0) {
 			t(timer_label, inspection_count);
 		}
@@ -207,6 +208,7 @@ var ui = function() {
 	on_inspection: on_inspection,
 
 	on_running: function() {
+		timer_label.style.color = "black";
 		update_timer = setInterval(ui.update_running, 10);
 		for(var i = 0; i < to_hide.length; i++)
 		{
