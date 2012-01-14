@@ -63,16 +63,15 @@ h2, h3 {
 	display: none;
 }
 
+
 #options, #solve_popup, #avg_popup {
 	z-index: 6;
 	position: absolute;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	padding: 5px;
-	top:40%;
+	top:50%;
 	left:50%;
-	margin-left:-12.5%;
-	margin-top:-12.5%;
 	padding: 1%;
 	display: none;
 	box-shadow: 1px 2px 1px #888;

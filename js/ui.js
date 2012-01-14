@@ -116,6 +116,8 @@ var ui = function() {
 		if(timer.is_running()) return;
 		toggle($('options'));
 		toggle($('gray_out')); 
+		$('options').style.marginLeft = ($('options').offsetWidth / -2) + "px";
+		$('options').style.marginTop = ($('options').offsetHeight / -2) + "px";
 	}
 
 	function toggle_solve_popup(index) {
@@ -139,6 +141,8 @@ var ui = function() {
 		}
 		toggle($('solve_popup'));
 		toggle($('gray_out'));
+		$('solve_popup').style.marginLeft = ($('solve_popup').offsetWidth / -2) + "px";
+		$('solve_popup').style.marginTop = ($('solve_popup').offsetHeight / -2) + "px";
 	}
 
 	function toggle_avg_popup(index, end) {
@@ -154,6 +158,8 @@ var ui = function() {
 		}
 		toggle($('avg_popup'));
 		toggle($('gray_out'));
+		$('avg_popup').style.marginLeft = ($('avg_popup').offsetWidth / -2) + "px";
+		$('avg_popup').style.marginTop = ($('avg_popup').offsetHeight / -2) + "px";
 	}
 
 	function toggle_popup() {
