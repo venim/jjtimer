@@ -1,4 +1,4 @@
-load_external("http://www.cubing.net/mark2/inc/scramblers/scramble_333.js")
+load_external("http://www.cubing.net/mark2/inc/scramblers/scramble_333.js");
 
 var mark2_333 = {
 	name: '3x3-mk2',
@@ -13,5 +13,6 @@ var mark2_333 = {
 	}
 };
 
+//shortcut_manager.add(51, true, scramble_manager.change, ["3x3-mk2"]);
 scramble_manager.add(mark2_333);
 ui.plugin_loaded("mark2_333");

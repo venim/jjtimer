@@ -5,6 +5,9 @@ function load_external(url) {
 	document.getElementsByTagName("head")[0].appendChild(file);
 } 
 
+function foo(a){
+	return a;
+}
 function $(id) { return document.getElementById(id); }
 function t(e, t) { e.innerHTML = t; }
 
@@ -204,6 +207,7 @@ var ui = function() {
 	return {
 	on_inspection: on_inspection,
 	update_stats: update_stats,
+	toggle_options: toggle_options,
 
 	on_running: function() {
 		update_timer = setInterval(ui.update_running, 10);
@@ -234,6 +238,11 @@ var ui = function() {
 	toggle_inspection: function() {
 		$('use_inspection').checked = ! $('use_inspection').checked;
 		config['use_inspection'] = $('use_inspection').checked;
+	},
+
+	change_scrambler: function(index) {
+		$('scramble_menu').selectedIndex = index;
+		next_scramble();
 	},
 
 	reset: function() {

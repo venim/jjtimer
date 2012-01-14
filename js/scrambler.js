@@ -11,9 +11,20 @@ var scramble_manager = function() {
 	function add_default() {
 		add({ name: '3x3', scramble_func: scramble_manager.generic([["U","D"],["R","L"],["F","B"]],["","2","'"], 25), selected: function(){}, unselected: function(){}});
 		add({ name: '4x4', scramble_func: scramble_manager.generic([["U","D","u"],["R","L","r"],["F","B","f"]],["","2","'"], 40), selected: function(){}, unselected: function(){}});
+		add({ name: '5x5', scramble_func: scramble_manager.generic([["U","D","u'",'d'],["R","L",'r','l'],["F","B",'f','b']],["","2","'"], 60), selected: function(){}, unselected: function(){}});
 		set(0);
 	}
 	
+	function change(name) {
+		for(var i=0; i<scramblers.length; i++){
+			if (scramblers[i].name === name){
+				set(i);
+				ui.change_scrambler(i);
+				break;
+			}
+		}
+	}
+
 	function set(index) {
 		if(current_scrambler && current_scrambler.unselected)
 			current_scrambler.unselected();
@@ -38,6 +49,7 @@ var scramble_manager = function() {
 		add: add,
 		add_default: add_default,
 		set: set,
+		change: change,
 
 		next: next,
 		last_scramble: function() { return last_scramble; },
