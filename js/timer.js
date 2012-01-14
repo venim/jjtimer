@@ -17,12 +17,14 @@ var timer = function() {
 		state = Delay;
 		solve_time = end_time.getTime() - start_time.getTime();
 		session.add(solve_time, scramble_manager.last_scramble());
-		if(use_inspection && inspection_count < 0) {
-			if(inspection_count >= -2) {
-				session.toggle_plus_two(null);
-			}
-			else {
-				session.toggle_dnf(null);
+		if(use_inspection){
+			if(inspection_count < 0) {
+				if(inspection_count >= -2) {
+					session.toggle_plus_two(null);
+				}
+				else {
+					session.toggle_dnf(null);
+				}
 			}
 			inspection_count = 15;
 		}
@@ -47,7 +49,7 @@ var timer = function() {
 		},
 
 		trigger_down: function(ev) {
-			if((Waiting === state && !use_inspection) ||
+			if((Waiting === state && !use_inspection && ev.keyCode === 32) ||
 					Inspecting === state) {
 				state = Ready;
 			}

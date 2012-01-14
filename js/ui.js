@@ -186,7 +186,7 @@ var ui = function() {
 	}
 
 	function key_down(ev) {
-		timer.trigger_down();
+		timer.trigger_down(ev);
 	}
 
 	function key_up(ev) {
@@ -195,16 +195,15 @@ var ui = function() {
 				toggle_popup();
 			}
 		}
-		else if (ev.keyCode === 27){
-			ui.reset();
-		}
 		else {
 			timer.trigger_up(ev.keyCode === 32);
+			shortcut_manager.key_up(ev);
 		}
 	}
 
 	return {
 	on_inspection: on_inspection,
+	update_stats: update_stats,
 
 	on_running: function() {
 		update_timer = setInterval(ui.update_running, 10);
@@ -232,6 +231,11 @@ var ui = function() {
 	toggle_solve_popup: toggle_solve_popup,
 	toggle_avg_popup: toggle_avg_popup,
 	
+	toggle_inspection: function() {
+		$('use_inspection').checked = ! $('use_inspection').checked;
+		config['use_inspection'] = $('use_inspection').checked;
+	},
+
 	reset: function() {
 		timer.reset();
 		next_scramble();
@@ -383,6 +387,7 @@ var ui = function() {
 
 		$('solve_popup_close').onclick = toggle_popup;
 
+		shortcut_manager.add_default();
 		scramble_manager.add_default();
 		populate_scramblers_menu();
 
