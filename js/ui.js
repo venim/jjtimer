@@ -49,11 +49,11 @@ var ui = function() {
 		return out;
 	}
 
-	function on_inspection(time) {
-		if(time > 0) {
-			t(timer_label, time);
+	function on_inspection(inspection_count) {
+		if(inspection_count > 0) {
+			t(timer_label, inspection_count);
 		}
-		else if(time > -2) {
+		else if(inspection_count > -2) {
 			t(timer_label, "+2");
 		}
 		else {

@@ -17,7 +17,7 @@ var timer = function() {
 		state = Delay;
 		solve_time = end_time.getTime() - start_time.getTime();
 		session.add(solve_time, scramble_manager.last_scramble());
-		if(timer.use_inspection() && inspection_count < 0) {
+		if(use_inspection && inspection_count < 0) {
 			if(inspection_count >= -2) {
 				session.toggle_plus_two(null);
 			}
@@ -40,10 +40,6 @@ var timer = function() {
 		reset: function() {
 			state = Waiting;
 			session.reset();
-		},
-
-		use_inspection: function() {
-			return use_inspection;
 		},
 
 		toggle_inspection: function() {
