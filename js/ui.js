@@ -159,10 +159,14 @@ var ui = function() {
 			$('avg_popup_list').innerHTML = out;
 			$('avg_popup_header').innerHTML = "solves " + (index+1) + " - " + (end+1);
 		}
+		$('avg_popup').style.zIndex = -1;
 		toggle($('avg_popup'));
 		toggle($('gray_out'));
-		$('avg_popup').style.marginLeft = ($('avg_popup').offsetWidth / -2) + "px";
-		$('avg_popup').style.marginTop = ($('avg_popup').offsetHeight / -2) + "px";
+		//$('avg_popup').style.marginLeft = ($('avg_popup').offsetWidth / -2) + "px";
+		//$('avg_popup').style.marginTop = ($('avg_popup').offsetHeight / -2) + "px";
+		$('avg_popup').style.left = (((window.innerWidth - $('avg_popup').offsetWidth)) / 2) + "px";
+		$('avg_popup').style.top = (((window.innerHeight - $('avg_popup').offsetHeight)) / 2) + "px";
+		$('avg_popup').style.zIndex = 6;
 	}
 
 	function toggle_popup() {
@@ -427,3 +431,9 @@ var ui = function() {
 window['ui'] = ui;
 window.onload = ui.init;
 window.onbeforeunload = ui.on_close;
+window.onresize = function(){
+	$('avg_popup').style.left = (((window.innerWidth - $('avg_popup').offsetWidth)) / 2) + "px";
+	$('avg_popup').style.top = (((window.innerHeight - $('avg_popup').offsetHeight)) / 2) + "px";
+	$('solve_popup').style.marginLeft = ($('solve_popup').offsetWidth / -2) + "px";
+	$('solve_popup').style.marginTop = ($('solve_popup').offsetHeight / -2) + "px";
+};
