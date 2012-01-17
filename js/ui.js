@@ -113,7 +113,7 @@ var ui = (function() {
 		}
 	}
 
-	function centre(el) {
+	function center(el) {
 		el.style.marginLeft = (el.offsetWidth / -2) + "px";
 		el.style.marginTop = (el.offsetHeight / -2) + "px";
 	}
@@ -122,7 +122,7 @@ var ui = (function() {
 		if(timer.is_running()) return;
 		toggle($('options_popup'));
 		toggle($('gray_out')); 
-		centre($('options_popup'));
+		center($('options_popup'));
 	}
 
 	function toggle_solve_popup(index) {
@@ -147,7 +147,7 @@ var ui = (function() {
 		toggle($('solve_popup'));
 		toggle($('gray_out'));
 
-		centre($('solve_popup'));
+		center($('solve_popup'));
 	}
 
 	function toggle_avg_popup(index, end) {
@@ -164,7 +164,7 @@ var ui = (function() {
 		toggle($('avg_popup'));
 		toggle($('gray_out'));
 		
-		centre($('avg_popup'));
+		center($('avg_popup'));
 	}
 
 	function toggle_popup() {
@@ -423,9 +423,9 @@ var ui = (function() {
 		window.onblur = function() { timer_label.style.color="gray"; };
 		window.onfocus = function() { timer_label.style.color="black"; };
 		window.onresize= function() {
-			centre($('options_popup'));
-			centre($('solve_popup'));
-			centre($('avg_popup'));
+			center($('options_popup'));
+			center($('solve_popup'));
+			center($('avg_popup'));
 		}
 	}
 	};
