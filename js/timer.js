@@ -57,12 +57,12 @@ var timer = function() {
 		},
 
 		trigger_up: function(ev) {
-			if(use_inspection && Waiting === state && ev)
+			if(use_inspection && Waiting === state)
 			{
 				state = Inspecting;
 				set_inspection();
 			}
-			else if(Ready === state && ev) {
+			else if(Ready === state) {
 				set_running();
 			}
 		},
